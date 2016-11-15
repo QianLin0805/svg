@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script type="text/javascript" src="jquery.js"></script>
+<style>
+	body{
+		margin: 0;
+		padding:0;
+		background: #b7bf76;
+	}
+	svg{
+		display: block;
+		margin: 50px auto 0;
+	}
+	.points{
+		fill: black;
+		opacity: 0;
+		cursor: pointer;
+	}
+	.pathRight{
+		stroke-dasharray: 200 200;
+		stroke-dashoffset: 200;
+		transition: all 0.6s linear;
+	}
+	.pathRight.show{
+		stroke-dashoffset: 0;
+	}
+	.face{
+		display: none;
+	}
+	.eye{
+		animation: blink 5s infinite 3s linear;
+	}
+	.leftEye{
+		transform-origin: -6px -4px;
+	}
+	.rightEye{
+		transform-origin: -6px -4px;
+	}
+	@keyframes blink {
+		0%{transform: scale(1,1);}
+		10%{transform: scale(1,0);}
+		20%{transform: scale(1,1);}
+		100%{transform: scale(1,1);}
+	}
+</style>
+</head>
+<body>
+<svg width="800" height="800" xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<g class="item">
+		<path d="M20 150 C5 50,80 15,120 15" transform="translate(30 200)" fill="none" stroke="rgb(121, 112, 179)" stroke-linecap="round" stroke-width="40" class="path pathRight" />
+		<circle cx="0" cy="0" r="30" class="points" transform="translate(50 350)" id="circle" ></circle>
+		<g class="face" transform="translate(28,200)">
+			<ellipse cx="-8" cy="-4" rx="4" ry="1.8" fill="white" class="eye leftEye" />
+			<ellipse cx="8" cy="-4" rx="4" ry="1.8" fill="white" class="eye rightEye" />
+			<ellipse cx="0" cy="8" rx="4" ry="3.6" fill="black" class="mouse">
+				<animate attributeType="XML" attributeName="ry" values="3.6;0;3.6" dur="1.2s" repeatCount="indefinite" />
+			</ellipse>
+			<animateMotion path="M20 150 C5 50,80 15,120 15" dur="0.6s" begin="circle.mouseover" fill="freeze"  />
+		</g>
+	</g>
+</svg>
+</body>
+</html>
+<script type="text/javascript">
+	$('.points').hover(function () {
+		var path = $(this).prev().attr('d');
+		$('.path').addClass('show');
+		$('.face').show();
+	},function () {
+		$('.path').removeClass('show');
+		$('.face').hide();
+	});
+</script>
